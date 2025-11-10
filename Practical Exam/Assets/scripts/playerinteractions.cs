@@ -40,7 +40,7 @@ public class playerinteractions : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 weapons[0].SetActive(true);
-                weapons[0].transform.position = transform.position + transform.forward*1;
+                weapons[0].transform.position = transform.position + transform.forward*2;
             }
         }
 
@@ -58,7 +58,7 @@ public class playerinteractions : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 weapons[1].SetActive(true);
-                weapons[1].transform.position = transform.position + transform.forward * 1;
+                weapons[1].transform.position = transform.position + transform.forward * 2;
             }
         }
 
