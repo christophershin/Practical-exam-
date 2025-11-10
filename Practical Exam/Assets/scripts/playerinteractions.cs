@@ -24,7 +24,7 @@ public class playerinteractions : MonoBehaviour
             animator.SetBool("Walking", true);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKey(KeyCode.E))
         {
             Application.Quit();
         }
