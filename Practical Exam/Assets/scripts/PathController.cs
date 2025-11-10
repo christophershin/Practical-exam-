@@ -19,13 +19,14 @@ public class PathController : MonoBehaviour
 
     void Start()
     {
-        isWalking = false;
+        isWalking = true;
         animator.SetBool("isWalking", isWalking);
         thePath = pathManager.GetPath();
         if (thePath != null && thePath.Count > 0)
         {
             target = thePath[0];
         }
+
     }
 
     void rotateTowardsTarget()
@@ -59,12 +60,6 @@ public class PathController : MonoBehaviour
     void Update()
     {
 
-        if (Input.anyKeyDown)
-        {
-            isWalking = !isWalking;
-            animator.SetBool("isWalking", isWalking);
-
-        }
         if (isWalking)
         {
             rotateTowardsTarget();
