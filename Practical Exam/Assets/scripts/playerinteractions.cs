@@ -1,4 +1,6 @@
-using Unity.VisualScripting;
+using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -8,7 +10,10 @@ public class playerinteractions : MonoBehaviour
 
     Animator animator;
     NavMeshAgent player;
+    public List<GameObject> weapons;
 
+    private bool pickeditem1 = false;
+    private bool pickeditem2 = false;
 
     void Start()
     {
@@ -22,18 +27,41 @@ public class playerinteractions : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetBool("Walking", true);
+            animator.SetBool("PickUp", false);
         }
 
-        if(Input.GetKey(KeyCode.E))
+        if (player.destination.magnitude <= 1)
         {
-            Application.Quit();
+            animator.SetBool("Walking", false);
         }
 
-        if (!player.isOnOffMeshLink)
+        if (pickeditem1)
         {
-            Debug.Log("jump");
-            animator.SetBool("Jump", true);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                weapons[0].SetActive(true);
+                weapons[0].transform.position = transform.position + transform.forward*1;
+            }
         }
+
+        if (pickeditem1)
+        {
+            if (Input.GetKey(KeyCode.Alpha0))
+            {
+                weapons[0].SetActive(false);
+
+            }
+        }
+
+        if (pickeditem2)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                weapons[1].SetActive(true);
+                weapons[1].transform.position = transform.position + transform.forward * 1;
+            }
+        }
+
 
     }
 
@@ -41,16 +69,27 @@ public class playerinteractions : MonoBehaviour
     {
         if(other.gameObject.name == "gun1")
         {
-            Destroy(other.gameObject);
+            pickeditem1 = true;
+            other.gameObject.SetActive(false);
             Debug.Log("picked up gun 1");
             animator.SetBool("PickUp", true);
         }
 
         if(other.gameObject.name == "gun2")
         {
-            Destroy(other.gameObject);
+            pickeditem2 = true;
+            other.gameObject.SetActive(false);
             Debug.Log("picked up gun 2");
             animator.SetBool("PickUp", true);
+
+            Application.Quit();
+            EditorApplication.isPlaying = false;
+        }
+
+        if(other.gameObject.CompareTag("jump"))
+        {
+            Debug.Log("jump");
+            animator.SetBool("Jump", true);
         }
     }
 }
